@@ -1,0 +1,32 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+    <h3>Tópico: {{topic}}</h3>
+    <p>Anotações:</p>
+    <!--Aula Anotações-->
+    <p><a href="{% url 'new_entry' topic.id %}">Adicione uma nova anotação</a></p>
+    <!---->
+    <ul>
+        {% for entry in entries %}
+
+        <li>
+            <p>{{entry.date_added | date:'d F, Y H:i'}}</p>
+            <p>{{entry.text | linebreaks}}</p>
+            <!--Aula editar_anotações-->
+            <p>
+                <a href="{% url 'edit_entry' entry.id %}">Editar Anotação</a> 
+                <!--EXERCÍCIO 2-->
+                | <a href="{% url 'delete_entry' entry.id %}" onclick="return confirm('Tem certeza que deseja excluir esta anotação?');">Excluir Anotação</a>
+                <!---->
+            </p>
+            <!---->
+        </li>
+
+         {% empty %}
+        <li>Não há registros...</li>
+
+
+        {% endfor %}
+
+    </ul>
+{% endblock content %}
