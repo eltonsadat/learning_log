@@ -1,11 +1,67 @@
-<p>
-    <a href="{% url 'index' %}">Learning Log</a> -
-    <a href="{% url 'topics' %}">Tópicos</a> <!--Adiciona depois de criar a página topic-->
-    {% if user.is_authenticated %}
-        Olá, {{user.username}} (<a href="{% url 'logout' %}">sair</a>)
-    {% else %}
-        <a href="{% url 'login' %}">Entrar</a> | <a href="{% url 'register' %}">Novo usuário</a>
-    {% endif %}
-</p>
+{% load static %}
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="pt_br">
 
-{% block content %} {% endblock content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicação para estudos e anotações">
+    <meta name="keywords" content="Anotação, anotações, tópico, tópicos, estudo, estudos">
+    <meta name="author" content="Elton">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <title>Learning Log</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}">Learning Log</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'topics' %}">Tópicos</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-right">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Olá, {{user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">(sair)</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Novo usuário</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div>
+            {% block header %} {% endblock header %}
+        </div>
+
+        <div>
+            {% block content %} {% endblock content %}
+        </div>
+    </div>
+</body>
+
+</html>
